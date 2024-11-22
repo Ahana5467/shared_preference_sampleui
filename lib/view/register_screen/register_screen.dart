@@ -1,5 +1,5 @@
 import 'package:flutter/material.dart';
-import 'package:shared_preference_sampleui/view/login_screen/login_screen.dart';
+import 'package:shared_preference_sampleui/view/home_screen/home_screen.dart';
 import 'package:shared_preferences/shared_preferences.dart';
 
 class RegisterScreen extends StatelessWidget {
@@ -84,38 +84,42 @@ class RegisterScreen extends StatelessWidget {
               ),
               SizedBox(height: 20),
               InkWell(
-                onTap: () async {
-                  String email = emailController.text;
-                  String password = passwordController.text;
-                  String conpassword = confirmController.text;
-                  if(_formKey.currentState!.validate()){
-                  if(password == conpassword && email.isNotEmpty){
-                  final SharedPreferences prefs = await SharedPreferences.getInstance();
-                  await prefs.setString('email', emailController.text);
-                  await prefs.setString('password', passwordController.text);
-                  await prefs.setBool('isRegister', true);
+                  onTap: () async {
+                    String email = emailController.text;
+                    String password = passwordController.text;
+                    String confirmPass = confirmController.text;
+                    if(_formKey.currentState!.validate()){
+                    if(password==confirmPass && email.isNotEmpty){
+                       final SharedPreferences prefs = await SharedPreferences.getInstance();
+                    await prefs.setBool('isRegistered', true);
+                    await prefs.setString('email', emailController.text);
+                    await prefs.setString('password', passwordController.text);
                     Navigator.pop(context);
-                  }else{
-                    Navigator.push(context, MaterialPageRoute(builder: (context) => LoginScreen(),));
-                  }
-                  }
+        
+                    }
+                    else{
+                      Navigator.push(context, MaterialPageRoute(builder: (context)=>RegisterScreen()));
+                    }
+                    }
+                    
                   },
-                child: Container(
-                    padding: EdgeInsets.all(10),
+                   child: Container(
+                    padding: EdgeInsets.all(8),
+                    height: 50,
                     width: double.infinity,
-                    decoration: BoxDecoration(borderRadius: BorderRadius.circular(5),color: Colors.blue),
-                    child: Center(child: Text("Sign in",style: TextStyle(color: Colors.white,fontSize: 16),),),
+                    decoration: BoxDecoration(
+                      color: Colors.blue,
+                      borderRadius: BorderRadius.circular(8)
                     ),
-              ),
+                    child: Center(child: Text("Sign Up")),
+                   ),
+                 ),
                   Spacer(),
                   Row(
                     children: [
                       Text("Already have an account?",style: TextStyle(color: Colors.black,fontSize: 12,fontWeight: FontWeight.bold),),
-                  InkWell(
-                      onTap: () {
-                        Navigator.push(context, MaterialPageRoute(builder: (context) => LoginScreen(),));
-                      },
-                      child: Text("Sign in",style: TextStyle(color: Colors.blue,fontSize: 12,fontWeight: FontWeight.bold),)),
+                  
+                       Text("Sign in",style: TextStyle(color: Colors.blue,fontSize: 12,fontWeight: FontWeight.bold),),
                     ]
                   )
             ]

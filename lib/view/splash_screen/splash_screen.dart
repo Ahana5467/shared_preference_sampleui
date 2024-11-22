@@ -13,17 +13,17 @@ class SplashScreen extends StatefulWidget {
 class _SplashScreenState extends State<SplashScreen> {
   @override
   void initState() {
-    
-    super.initState();
     Future.delayed(Duration(seconds: 3),() async {
       final SharedPreferences prefs = await SharedPreferences.getInstance();
-      bool islogged = prefs.getBool('islogged') ?? false;
-      if(islogged){
-        Navigator.push(context, MaterialPageRoute(builder: (context) => HomeScreen(),));
-      }else{
-        Navigator.push(context, MaterialPageRoute(builder: (context) => LoginScreen(),));
+      final bool? isLogged = prefs.getBool('isLogged');
+      if(isLogged==true){
+        Navigator.pushReplacement(context, MaterialPageRoute(builder: (context)=>HomeScreen()));
+      }
+      else{
+        Navigator.pushReplacement(context, MaterialPageRoute(builder: (context)=>LoginScreen()));
       }
     });
+    super.initState();
   }
   @override
   Widget build(BuildContext context) {

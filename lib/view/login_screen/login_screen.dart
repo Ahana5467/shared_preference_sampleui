@@ -77,29 +77,38 @@ class _LoginScreenState extends State<LoginScreen> {
                 ],
               ),
               InkWell(
-                onTap: () async {
-                  String email = emailController.text;
-                  String password = passwordController.text;
-                  final SharedPreferences prefs = await SharedPreferences.getInstance();
-                  final bool? isRegister = prefs.getBool('isRegister');
-                  final String? regemail = prefs.getString('email');
-                  final String? regpassword = prefs.getString('email');
-                  if(_formKey.currentState!.validate()){
-                  if(isRegister==true &&  email==regemail && password == regpassword){
-                    await prefs.setBool('isLogged', true);
-                  Navigator.pushReplacement(context, MaterialPageRoute(builder: (context) => HomeScreen(),));
-                  }else{
-                    Navigator.push(context, MaterialPageRoute(builder: (context) => HomeScreen(),));
-                  }
-                  }
-                },
-                child: Container(
-                  padding: EdgeInsets.all(10),
-                  width: double.infinity,
-                  decoration: BoxDecoration(borderRadius: BorderRadius.circular(5),color: Colors.blue),
-                  child: Center(child: Text("Sign in",style: TextStyle(color: Colors.white,fontSize: 16),),),
-                  ),
-              ),
+                  onTap: () async {
+                    String email = emailController.text;
+                    String password = passwordController.text;
+                    
+                    final SharedPreferences prefs = await SharedPreferences.getInstance();
+                    final bool? isRegistered = prefs.getBool('isRegistered');
+                    final String? registeredEmail = prefs.getString('email');
+                    final String? registeredPassword = prefs.getString('password');
+                    if(_formKey.currentState!.validate()){
+                    if(isRegistered==true && email==registeredEmail && password==registeredPassword ){
+        
+                      await prefs.setBool('isLogged', true);
+                     Navigator.pushReplacement(context, MaterialPageRoute(builder: (context)=>HomeScreen()));
+                    
+                    }
+                    else{
+                       Navigator.push(context, MaterialPageRoute(builder: (context)=>RegisterScreen()));
+                    }
+                    }
+                    
+                  },
+                   child: Container(
+                    padding: EdgeInsets.all(8),
+                    height: 50,
+                    width: double.infinity,
+                    decoration: BoxDecoration(
+                      color: Colors.blue,
+                      borderRadius: BorderRadius.circular(8)
+                    ),
+                    child: Center(child: Text("Sign in")),
+                   ),
+                 ),
                 Spacer(),
                 Row(
                   mainAxisAlignment: MainAxisAlignment.center,
